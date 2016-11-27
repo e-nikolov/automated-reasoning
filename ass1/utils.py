@@ -26,7 +26,7 @@ class helpers():
 		output_file_content  = str(smt2_string)
 		index = output_file_content.find('\n')
 		output_file_content = output_file_content[:index+1] + LOGIC_STR + \
-							 "\n" + output_file_content[index:] + \
+							 output_file_content[index:] + \
 							 MODEL_STR + "\n"
 
 		output_file.write(output_file_content)
