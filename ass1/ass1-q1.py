@@ -1,4 +1,6 @@
 from z3 import *
+import utils
+
 
 TRUCKS = 8
 SLOTS = 8
@@ -73,6 +75,9 @@ for i in range(TRUCKS):
 
 if s.check() == sat:
 	print(s.model())
+	helper_obj = utils.helpers()
+	helper_obj.z3_to_smt2(s.to_smt2(), "ass1-q1")
+
 else:
 	print("Failed to solve")
 # print(s.to_smt2())
