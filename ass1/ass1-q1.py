@@ -25,6 +25,10 @@ ITEMS  = ['Nuzzle', 'Prittle', 'Skipple', 'Crottle', 'Dupple']
 WEIGHT = [NUZZLE_WEIGHT, PRITTLE_WEIGHT, SKIPPLE_WEIGHT, CROTTLE_WEIGHT, DUPPLE_WEIGHT]
 DEMAND = [NUZZLES, PRITTLES, SKIPPLES, CROTTLES, DUPPLES]
 
+TYPEOF = {}
+for idx, item in enumerate(ITEMS):
+	TYPEOF[item] = idx
+
 # print(DEMAND)
 
 # print('truck%s%sCount' % (0, items[1]))
@@ -51,6 +55,18 @@ for j in range(ITEM_TYPES):
 		Sum(
 			[ truckItem[i][j] for i in range(TRUCKS) ]
 		) == DEMAND[j]
+	)
+
+# Only the first 3 trucks can store skipples
+for i in range(3, TRUCKS):
+	s.add(
+		truckItem[i][TYPEOF['Skipple']] == 0
+	)
+
+# At most 1 nuzzle per truck
+for i in range(TRUCKS):
+	s.add(
+		truckItem[i][TYPEOF['Nuzzle']] <= 1
 	)
 
 # print(s.check())
