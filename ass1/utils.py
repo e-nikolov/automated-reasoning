@@ -2,7 +2,7 @@ import sys, os
 
 
 FOLDER_NAME = "smt2"
-LOGIC_STR = "(set-logic QF_UFLRA)"
+LOGIC_STR = "(set-logic QF_UFNIA)"
 MODEL_STR = "(get-model)"
 class helpers():
 
