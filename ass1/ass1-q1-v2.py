@@ -76,20 +76,25 @@ def RepeatingFuntion(x):
 			truckItem[i][TYPEOF['Nuzzle']] <= 1
 		)
 
-	# print(s.check())
-	if s.check() == sat:
-		return True
+	return s
+
+while(True):
+	s = RepeatingFuntion(PRITTLES_GLOB)
+	
+	if(s.check() == sat):
+		print("Satisfiable with " + str(PRITTLES_GLOB) + " prittle pallets")
+		PRITTLES_GLOB = PRITTLES_GLOB + 1
+
+		prev_solver = s
 
 	else:
-		return False
+		print("Unsatisfiable with " + str(PRITTLES_GLOB) + " prittle pallets")
+		print()
+		print("Best model found:\n")
+		print(prev_solver.model())
+		utils.z3_to_smt2(prev_solver, "ass1-q1")
 
-while(RepeatingFuntion(PRITTLES_GLOB)):
-	print "SUCCESS!!" + str(PRITTLES_GLOB) + " prittle pellets"
-	PRITTLES_GLOB = PRITTLES_GLOB+1
-	
-
-print "FAILED!!" + str(PRITTLES_GLOB)
-
+		break
 
 # if s.check() == sat:
 # 	print(s.model())
