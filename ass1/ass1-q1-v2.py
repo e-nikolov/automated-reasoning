@@ -58,11 +58,18 @@ def RepeatingFuntion(x):
 
 	# The combined number of items delivered by all trucks per item type must be equal to the demand 
 	for j in range(ITEM_TYPES):
-		s.add(
-			Sum(
-				[ truckItem[i][j] for i in range(TRUCKS) ]
-			) == DEMAND[j]
-		)
+		if(TYPEOF[j] == 'Prittles'):
+			s.add(
+				Sum(
+					[ truckItem[i][j] for i in range(TRUCKS) ]
+				) <= 100
+			)
+		else:
+			s.add(
+				Sum(
+					[ truckItem[i][j] for i in range(TRUCKS) ]
+				) == DEMAND[j]
+			)
 
 	# Only the first 3 trucks can store skipples
 	for i in range(3, TRUCKS):
@@ -92,7 +99,7 @@ while(True):
 		print()
 		print("Best model found:\n")
 		print(prev_solver.model())
-		utils.z3_to_smt2(prev_solver, "ass1-q1")
+		utils.z3_to_smt2(prev_solver, "ass1-q1-a")
 
 		break
 
