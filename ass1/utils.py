@@ -8,7 +8,7 @@ MODEL_STR = "(get-model)"
 # No use now, maybe some other helper function will use constructor
 __InitSuccess = True
 
-def z3_to_smt2(solver, filename, logic="QF_UFNIA"):
+def z3_to_smt2(solver, filename, logic="QF_UFLIA"):
 
     if not __InitSuccess:
         sys.exit("Helpers Init error")
