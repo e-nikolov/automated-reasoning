@@ -7,11 +7,8 @@ CHIP_HEIGHT = 30
 COMPONENT_DIM = [(4,3), (4,3), (4,5), (4,6), (5,20), (6,9), (6,10),
 					(6,11), (7,8), (7,12), (10,10), (10,20)]
 
-<<<<<<< HEAD
 RESULT_PARAMS = ['X','Y','Width','Height','Rotation']
-=======
-RESULT_PARAMS = ['X', 'Y', 'Width', 'Height']
->>>>>>> 503e5a8773f718003ee7a9ab89c14a149c631d37
+
 PARAM = {}
 
 for idx, par in enumerate(RESULT_PARAMS):
@@ -24,7 +21,7 @@ CHIP_POS = [[Real('comp%s%s' % (i, RESULT_PARAMS[j])) for j in range(len(RESULT_
 # print(CHIP_POS)
 
 s = Solver()
-<<<<<<< HEAD
+
 
 # All components fit on the chip
 for i in range(len(COMPONENT_DIM)):
@@ -82,5 +79,4 @@ if s.check() == sat:
 
 else:
 	print("Failed to solve")
-=======
->>>>>>> 503e5a8773f718003ee7a9ab89c14a149c631d37
+
