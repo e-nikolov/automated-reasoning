@@ -7,7 +7,7 @@ CHIP_HEIGHT = 30
 COMPONENT_DIM = [(4,3), (4,3), (4,5), (4,6), (5,20), (6,9), (6,10),
 					(6,11), (7,8), (7,12), (10,10), (10,20)]
 
-RESULT_PARAMS = ['X','Y','Width','Height','Rotation']
+RESULT_PARAMS = ['X','Y','Rotation']
 
 PARAM = {}
 
@@ -34,13 +34,13 @@ for i in range(len(COMPONENT_DIM)):
 				And(
 					CHIP_POS[i][0] <= (CHIP_WIDTH - COMPONENT_DIM[i][0]), 
 					CHIP_POS[i][1] <= (CHIP_WIDTH - COMPONENT_DIM[i][1]),
-					CHIP_POS[i][4] == 0
+					CHIP_POS[i][2] == 0
 					),
 				# With rotation
 				And(
 					CHIP_POS[i][0] <= (CHIP_WIDTH - COMPONENT_DIM[i][1]),
 					CHIP_POS[i][1] <= (CHIP_WIDTH - COMPONENT_DIM[i][0]),
-					CHIP_POS[i][4] == 1
+					CHIP_POS[i][2] == 1
 					)
 			)
 		)
@@ -58,7 +58,7 @@ for i in range(len(COMPONENT_DIM)):
 								CHIP_POS[i][1] <= (CHIP_POS[j][1] - COMPONENT_DIM[i][1]), #below
 								CHIP_POS[j][1] <= (CHIP_POS[i][1] - COMPONENT_DIM[j][1]), #above
 							),
-							CHIP_POS[i][4] == 0
+							CHIP_POS[i][2] == 0
 						),
 						And(
 							Or(
@@ -67,7 +67,7 @@ for i in range(len(COMPONENT_DIM)):
 								CHIP_POS[i][1] <= (CHIP_POS[j][1] - COMPONENT_DIM[i][0]), #below
 								CHIP_POS[j][1] <= (CHIP_POS[i][1] - COMPONENT_DIM[j][0]), #above
 							),
-							CHIP_POS[i][4] == 1
+							CHIP_POS[i][2] == 1
 						)
 						)
 
