@@ -79,7 +79,8 @@ def RepeatingFuntion(x):
 	# No prittles and crottles on the same truck
 	for i in range(TRUCKS):
 		s.add(
-			Or(truckItem[i][TYPEOF['Prittle']] == 0, truckItem[i][TYPEOF['Crottle']] == 0)
+			Implies(truckItem[i][TYPEOF['Prittle']] > 0, truckItem[i][TYPEOF['Crottle']] == 0),
+			Implies(truckItem[i][TYPEOF['Crottle']] > 0, truckItem[i][TYPEOF['Prittle']] == 0)
 		)
 
 	return s
