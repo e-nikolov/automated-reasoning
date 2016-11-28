@@ -5,7 +5,8 @@ Reals:
 (set-logic QF_UFLRA)
 
 Ints:
-(set-logic QF_UFNIA)
+(set-logic QF_UFNIA) non-linear
+(set-logic QF_UFLIA) linear
 
 Ass1-1b
 
