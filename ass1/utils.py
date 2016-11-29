@@ -1,5 +1,6 @@
 import sys, os
 from z3 import *
+from pprint import *
 
 FOLDER_NAME = "smt2"
 LOGIC_STR = "(set-logic %s)"
@@ -28,3 +29,10 @@ def z3_to_smt2(solver, filename, logic="QF_UFLIA"):
                           MODEL_STR + "\n"
 
     output_file.write(output_file_content)
+
+def sorted_model(solver):
+    model = solver.model()
+
+    for var_str, var in sorted([(str(var), var) for var in model]):
+        print(var, model[var])
+
