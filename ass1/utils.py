@@ -72,3 +72,25 @@ def draw_chip_design(CHIP_WIDTH, CHIP_HEIGHT, COMPONENT_DIM, POWER_COMPONENTS, s
         else:
             plt.text(x+(w/2),y+(h/2),("C_"+str(i-POWER_COMPONENTS+1)))
     plt.show()
+
+
+def draw_schedule(JOBS, TIME, JOB_TIMES, solver):
+
+    sorted_l = sorted_model(solver)
+    plt.axis([0,TIME+5,0,(JOBS+1)*2])
+
+    sorted_list = []
+    for i in range(JOBS):
+        sorted_list.append(float(sum(Fraction(s) for s in sorted_l[i][1].split())))
+        x = sorted_list[i]
+        y = i*2
+        w = JOB_TIMES[i]
+        h = 1.5
+        plt.plot([x,x+w,x+w,x,x],[y,y,y+h,y+h,y])
+        plt.text(x+(w/2),y+(h/2),("J_"+str(i+1)))
+
+    plt.show()
+
+
+
+
