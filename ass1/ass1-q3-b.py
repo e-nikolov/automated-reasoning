@@ -87,7 +87,7 @@ s.add(And(
 if s.check() == sat:
 
 	utils.sorted_model(s)
-	utils.z3_to_smt2(s, "ass1-q3-a")
+	utils.z3_to_smt2(s, "ass1-q3-b")
 	utils.draw_schedule(JOBS, TIME, JOB_TIMES, s)
 
 else:	
