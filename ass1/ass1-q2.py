@@ -188,6 +188,7 @@ for i in range(POWER_COMPONENTS):
 if s.check() == sat:
 
 	print(utils.sorted_model(s))
+	utils.draw_chip_design(CHIP_WIDTH, CHIP_HEIGHT, COMPONENT_DIM, s)
 	utils.z3_to_smt2(s, "ass1-q2")
 
 else:	
