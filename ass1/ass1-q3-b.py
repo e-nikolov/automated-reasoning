@@ -2,7 +2,7 @@ from z3 import *
 import utils
 
 
-TIME = 56 # Aim is to minimize this variable
+TIME = 62 # Aim is to minimize this variable
 
 JOBS = 12
 RUN_TIME_ADDER = 5
@@ -73,6 +73,16 @@ for i in [4, 6, 9]:
 # Total time restriction
 for i in range(JOBS):
 	s.add( SCHEDULE[i] <= TIME - JOB_TIMES[i])
+
+# Additional condition for q3-b
+# Job 6 and 12 need a resource of limited availability
+# Job 6 can run only when job 12 is running
+s.add(And(
+			SCHEDULE[5] >= SCHEDULE[11],
+			SCHEDULE[5] <= SCHEDULE[11] + JOB_TIMES[11] - JOB_TIMES[5]
+			)
+		)
+
 
 if s.check() == sat:
 
