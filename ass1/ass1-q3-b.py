@@ -2,7 +2,7 @@ from z3 import *
 import utils
 
 
-TIME = 62 # Aim is to minimize this variable
+TIME = 66 # Aim is to minimize this variable
 
 JOBS = 12
 RUN_TIME_ADDER = 5
@@ -40,7 +40,7 @@ s.add(And(
 	)
 
 # Job 8 may not start earlier than 5
-s.add(SCHEDULE[8] > SCHEDULE[4])
+s.add(SCHEDULE[7] > SCHEDULE[4])
 
 # Job 9 starts after 5 and 8
 s.add(And(
