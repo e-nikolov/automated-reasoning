@@ -17,7 +17,7 @@ for idx, par in enumerate(RESULT_PARAMS):
 POWER_COMPONENTS = 2
 POWER_COMPONENTS_DISTANCE = 17
 
-CHIP_POS = [[Int('comp%02d%s' % (i, RESULT_PARAMS[j])) for j in range(len(RESULT_PARAMS))]
+CHIP_POS = [[Real('comp%02d%s' % (i, RESULT_PARAMS[j])) for j in range(len(RESULT_PARAMS))]
 			 for i in range(len(COMPONENT_DIM))]
 
 # print(CHIP_POS)

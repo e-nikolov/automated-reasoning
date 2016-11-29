@@ -2,6 +2,7 @@ import sys, os
 from z3 import *
 from pprint import *
 import matplotlib.pyplot as plt
+from fractions import Fraction
 
 FOLDER_NAME = "smt2"
 LOGIC_STR = "(set-logic %s)"
@@ -48,9 +49,9 @@ def draw_chip_design(CHIP_WIDTH,CHIP_HEIGHT,COMPONENT_DIM,solver):
     sorted_list = []
 
     for i in range(0,len(sorted_l),3):
-        sorted_list.append((int(sorted_l[i][1]),
-                            int(sorted_l[i+1][1]),
-                            int(sorted_l[i+2][1])))
+        sorted_list.append((float(sum(Fraction(s) for s in sorted_l[i][1].split())),
+                            (float(sum(Fraction(s) for s in sorted_l[i+1][1].split()))),
+                            (float(sum(Fraction(s) for s in sorted_l[i+2][1].split())))))
 
 
     for i in range(len(COMPONENT_DIM)):
