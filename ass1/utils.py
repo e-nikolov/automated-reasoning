@@ -41,7 +41,7 @@ def sorted_model(solver):
         sorted_list.append((var, str(model[var])))
     return sorted_list
 
-def draw_chip_design(CHIP_WIDTH,CHIP_HEIGHT,COMPONENT_DIM,solver):
+def draw_chip_design(CHIP_WIDTH, CHIP_HEIGHT, COMPONENT_DIM, POWER_COMPONENTS, solver):
 
     sorted_l = sorted_model(solver)
     plt.axis([0,CHIP_WIDTH,0,CHIP_HEIGHT])
@@ -67,6 +67,8 @@ def draw_chip_design(CHIP_WIDTH,CHIP_HEIGHT,COMPONENT_DIM,solver):
             h = COMPONENT_DIM[i][0]
 
         plt.plot([x,x+w,x+w,x,x],[y,y,y+h,y+h,y])
-        plt.text(x+(w/2),y+(h/2),str(i))
-
+        if(i<POWER_COMPONENTS):        
+            plt.text(x+(w/2),y+(h/2),("P_"+str(i+1)))
+        else:
+            plt.text(x+(w/2),y+(h/2),("C_"+str(i-POWER_COMPONENTS+1)))
     plt.show()
