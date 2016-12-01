@@ -41,36 +41,33 @@ def sorted_model(solver):
         sorted_list.append((var, str(model[var])))
     return sorted_list
 
-def draw_chip_design(CHIP_WIDTH, CHIP_HEIGHT, COMPONENT_DIM, POWER_COMPONENTS, solver):
+def draw_chip_design(CHIP_WIDTH, CHIP_HEIGHT, COMPONENT_DIM, POWER_COMPONENTS, solver, param):
 
     sorted_l = sorted_model(solver)
     plt.axis([0,CHIP_WIDTH,0,CHIP_HEIGHT])
 
     sorted_list = []
 
-    for i in range(0,len(sorted_l),3):
-        sorted_list.append((float(sum(Fraction(s) for s in sorted_l[i][1].split())),
-                            (float(sum(Fraction(s) for s in sorted_l[i+1][1].split()))),
-                            (float(sum(Fraction(s) for s in sorted_l[i+2][1].split())))))
-
+    for i in range(0, len(sorted_l), 4):
+        sorted_list.append(
+            (
+                float(sum(Fraction(s) for s in sorted_l[i][1].split())),
+                float(sum(Fraction(s) for s in sorted_l[i+1][1].split())),
+                float(sum(Fraction(s) for s in sorted_l[i+2][1].split())),
+                float(sum(Fraction(s) for s in sorted_l[i+3][1].split()))
+            )
+        )
 
     for i in range(len(COMPONENT_DIM)):
-        x = sorted_list[i][1]
-        y = sorted_list[i][2]
+        x = sorted_list[i][param['X']]
+        y = sorted_list[i][param['Y']]
         
-        if sorted_list[i][0] == 0:
-            w = COMPONENT_DIM[i][0]
-            h = COMPONENT_DIM[i][1]
-            
-        else:
-            w = COMPONENT_DIM[i][1]
-            h = COMPONENT_DIM[i][0]
+        w = sorted_list[i][param['Width']]
+        h = sorted_list[i][param['Height']]
 
         plt.plot([x,x+w,x+w,x,x],[y,y,y+h,y+h,y])
-        if(i<POWER_COMPONENTS):        
-            plt.text(x+(w/2),y+(h/2),("P_"+str(i+1)))
-        else:
-            plt.text(x+(w/2),y+(h/2),("C_"+str(i-POWER_COMPONENTS+1)))
+        
+        plt.text(x+(w/2),y+(h/2),("C_"+str(i)))
     plt.show()
 
 
@@ -90,6 +87,10 @@ def draw_schedule(JOBS, TIME, JOB_TIMES, solver):
         plt.text(x+(w/2),y+(h/2),("J_"+str(i+1)))
 
     plt.show()
+
+def abs(x):
+    return If(x >= 0,x,-x)
+
 
 
 
