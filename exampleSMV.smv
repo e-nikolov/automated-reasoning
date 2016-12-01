@@ -1,0 +1,9 @@
+MODULE main
+VAR
+a : boolean;
+b : boolean;
+INIT
+a & !b
+TRANS
+(next(a) = !a) & (next(b) = !b)
+LTLSPEC G (a | b)
