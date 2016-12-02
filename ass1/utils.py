@@ -37,7 +37,6 @@ def sorted_model(solver):
 
     sorted_list = []
     for var_str, var in sorted([(str(var), var) for var in model]):
-        print(var, model[var])
         sorted_list.append((var, str(model[var])))
     return sorted_list
 
