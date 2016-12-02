@@ -67,7 +67,10 @@ def draw_chip_design(CHIP_WIDTH, CHIP_HEIGHT, COMPONENT_DIM, POWER_COMPONENTS, s
 
         plt.plot([x,x+w,x+w,x,x],[y,y,y+h,y+h,y])
         
-        plt.text(x+(w/2),y+(h/2),("C_"+str(i)))
+        if(i<POWER_COMPONENTS):
+            plt.text(x+(w/2),y+(h/2),("P_"+str(i+1)))
+        else:
+            plt.text(x+(w/2),y+(h/2),("C_"+str(i+1-POWER_COMPONENTS)))
     plt.show()
 
 
