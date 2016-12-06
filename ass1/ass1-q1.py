@@ -34,7 +34,7 @@ for idx, item in enumerate(ITEMS):
 # print(DEMAND)
 
 # print('truck%s%sCount' % (0, items[1]))
-truckItem = [[ Int('%s%s' % (ITEMS[j][0], i)) for j in range(ITEM_TYPES) ] for i in range(TRUCKS)]
+truckItem = [[ Int('truck%s%sCount' % (i, ITEMS[j])) for j in range(ITEM_TYPES) ] for i in range(TRUCKS)]
 
 # print(truckItem)
 s = Solver()
