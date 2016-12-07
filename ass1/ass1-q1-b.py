@@ -39,7 +39,7 @@ def RepeatingFuntion(x):
 	# print(DEMAND)
 
 	# print('truck%s%sCount' % (0, items[1]))
-	truckItem = [[ Int('truck%s%sCount' % (i, ITEMS[j])) for j in range(ITEM_TYPES) ] for i in range(TRUCKS)]
+	truckItem = [[ Int('%s%s' % (ITEMS[j][0], i)) for j in range(ITEM_TYPES) ] for i in range(1, TRUCKS+1)]
 
 	# print(truckItem)
 	s = Solver()
@@ -96,9 +96,8 @@ while(True):
 
 	else:
 		print("Unsatisfiable with " + str(PRITTLES_GLOB) + " prittle pallets")
-		print()
 		print("Best model found:\n")
-		print(prev_solver.model())
+		print(utils.sorted_model(prev_solver))
 		utils.z3_to_smt2(prev_solver, "ass1-q1-b")
 
 		break

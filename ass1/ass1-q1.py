@@ -34,7 +34,7 @@ for idx, item in enumerate(ITEMS):
 # print(DEMAND)
 
 # print('truck%s%sCount' % (0, items[1]))
-truckItem = [[ Int('truck%s%sCount' % (i, ITEMS[j])) for j in range(ITEM_TYPES) ] for i in range(TRUCKS)]
+truckItem = [[ Int('%s%s' % (ITEMS[j][0], i)) for j in range(ITEM_TYPES) ] for i in range(1, TRUCKS+1)]
 
 # print(truckItem)
 s = Solver()
@@ -74,7 +74,7 @@ for i in range(TRUCKS):
 # print(s.check())
 
 if s.check() == sat:
-	print(s.model())
+	print(utils.sorted_model(s))
 	utils.z3_to_smt2(s, "ass1-q1")
 
 else:
