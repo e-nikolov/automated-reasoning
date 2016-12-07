@@ -8,7 +8,7 @@ JOBS = 12
 RUN_TIME_ADDER = 5
 JOB_TIMES = [i+1+RUN_TIME_ADDER for i in range(JOBS)]
 
-SCHEDULE = [Int('jobStart%02d' % (i+1)) for i in range(JOBS)]
+SCHEDULE = [Int('J%02d' % (i+1)) for i in range(JOBS)]
 
 
 s = Solver()

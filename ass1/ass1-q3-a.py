@@ -8,7 +8,7 @@ JOBS = 12
 RUN_TIME_ADDER = 5
 JOB_TIMES = [i+1+RUN_TIME_ADDER for i in range(JOBS)]
 
-SCHEDULE = [Int('jobStart%02d' % (i+1)) for i in range(JOBS)]
+SCHEDULE = [Int('J%02d' % (i+1)) for i in range(JOBS)]
 
 
 s = Solver()
@@ -65,8 +65,8 @@ for i in [4, 6, 9]:
 		if not (i==j):
 			s.add(
 					Or(
-						And(SCHEDULE[i] <= SCHEDULE[j] - JOB_TIMES[i]),
-						And(SCHEDULE[i] >= SCHEDULE[j] + JOB_TIMES[j])
+						(SCHEDULE[i] <= SCHEDULE[j] - JOB_TIMES[i]),
+						(SCHEDULE[i] >= SCHEDULE[j] + JOB_TIMES[j])
 						)
 					)
 
