@@ -2,7 +2,7 @@ from z3 import *
 import utils
 
 
-TIME = 60 # Aim is to minimize this variable
+TIME = 59 # Aim is to minimize this variable
 
 JOBS = 12
 RUN_TIME_ADDER = 5
@@ -40,7 +40,7 @@ s.add(And(
 	)
 
 # Job 8 may not start earlier than 5
-s.add(SCHEDULE[7] > SCHEDULE[4])
+s.add(SCHEDULE[7] >= SCHEDULE[4])
 
 # Job 9 starts after 5 and 8
 s.add(And(
@@ -76,7 +76,7 @@ for i in range(JOBS):
 
 if s.check() == sat:
 
-	utils.sorted_model(s)
+	print(utils.sorted_model(s))
 	utils.z3_to_smt2(s, "ass1-q3-a")
 	utils.draw_schedule(JOBS, TIME, JOB_TIMES, s)
 
