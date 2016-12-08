@@ -8,7 +8,7 @@ import utils
 STEPS = 8
 
 # b
-# STEPS = 18
+STEPS = 18
 
 NUM_VARS = 8
 
@@ -49,10 +49,10 @@ for step in range(1, STEPS):
 # define the stop criteria a3 = a7
 
 # a
-s.add(a[2][STEPS-1] == a[6][STEPS-1])
+s.add(a[3-1][STEPS-1] == a[7-1][STEPS-1])
 
 # b
-# s.add(a[2][STEPS-1] == a[4][STEPS-1])
+s.add(a[2][STEPS-1] == a[4][STEPS-1])
 
 if s.check() == sat:
 	step = 0
