@@ -1,9 +1,9 @@
 from z3 import *
 import utils
 
-TRUCK_CAPACITY = 240
+TRUCK_CAPACITY = 260
 
-STEPS = 20
+STEPS = 30
 
 NUM_LOCATIONS = 5
 LOCATIONS = ["S", "A", "B", "C", "D"]
@@ -72,14 +72,15 @@ for i in range(STEPS):
 				truckStatus[i][TYPEOF['C']] <= CAPACITY['C'],
 				truckStatus[i][TYPEOF['D']] <= CAPACITY['D'],
 				truckStatus[i][TYPEOF['POS']] >= 0,
-				truckStatus[i][TYPEOF['POS']] <= NUM_LOCATIONS,
+				truckStatus[i][TYPEOF['POS']] < NUM_LOCATIONS,
 				truckStatus[i][TYPEOF['INTRUCK']] >= 0,
 				truckStatus[i][TYPEOF['INTRUCK']] <= TRUCK_CAPACITY,
+				truckStatus[i][TYPEOF['DELIVERED']] >= 0
 				)
 		)
 
 # When the truck is in S
-for i in range(1, STEPS-1):
+for i in range(STEPS-1):
 	s.add(
 			Implies(
 				# Truck is at position S 
@@ -116,7 +117,7 @@ for i in range(1, STEPS-1):
 		)
 
 # When the truck is in A
-for i in range(1, STEPS-1):
+for i in range(STEPS-1):
 	s.add(
 			Implies(
 				# Truck is at position A
@@ -163,7 +164,7 @@ for i in range(1, STEPS-1):
 		)
 
 # When the truck is in C
-for i in range(1, STEPS-1):
+for i in range(STEPS-1):
 	s.add(
 			Implies(
 				# Truck is at position C
@@ -210,7 +211,7 @@ for i in range(1, STEPS-1):
 		)
 
 # When the truck is in B
-for i in range(1, STEPS-1):
+for i in range(STEPS-1):
 	s.add(
 			Implies(
 				# Truck is at position B
@@ -257,7 +258,7 @@ for i in range(1, STEPS-1):
 		)
 
 # When the truck is in D
-for i in range(1, STEPS-1):
+for i in range(STEPS-1):
 	s.add(
 			Implies(
 				# Truck is at position D
@@ -295,7 +296,7 @@ for i in range(1, STEPS-1):
 		)
 
 # None of the cities run out of food
-for i in range(1, STEPS-1):
+for i in range(STEPS):
 	s.add(
 			And(
 				truckStatus[i][TYPEOF['A']] > 0,
