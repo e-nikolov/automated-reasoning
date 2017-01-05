@@ -7,7 +7,7 @@ import utils
 
 TRUCK_CAPACITY = 260
 
-STEPS = 15
+STEPS = 25
 
 NUM_LOCATIONS = 5
 LOCATIONS = ["S", "A", "B", "C", "D"]
@@ -40,7 +40,7 @@ TYPEOF = {}
 for idx, variable in enumerate(ALL_VARS):
 	TYPEOF[variable] = idx
 
-truckStatus = [[Int('%02d%s' % (i,(list(TYPEOF.keys())[list(TYPEOF.values()).index(j)]))) 
+truckStatus = [[Int('v%02d%s' % (i,(list(TYPEOF.keys())[list(TYPEOF.values()).index(j)]))) 
 				for j in range(len(ALL_VARS))] 
 				for i in range(STEPS)]
 

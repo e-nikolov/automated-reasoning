@@ -1,0 +1,29 @@
+% Saved by Prover9-Mace4 Version 0.5, December 2007.
+
+set(ignore_option_dependencies). % GUI handles dependencies
+
+if(Prover9). % Options for Prover9
+  assign(max_seconds, 60).
+end_if.
+
+if(Mace4).   % Options for Mace4
+  assign(max_seconds, 60).
+end_if.
+
+formulas(assumptions).
+
+a(x,a(y,z)) = a(a(x,y),z).
+a(x,1)=x.
+a(x,inv(x))=1.
+
+end_of_list.
+
+formulas(goals).
+
+all x all y all z (a(1,x)=x).
+all x all y all z (inv(inv(x))=x).
+all x all y all z (a(inv(x),x)=1).
+all x all y all z (a(x,y)=a(y,x)).
+
+end_of_list.
+
