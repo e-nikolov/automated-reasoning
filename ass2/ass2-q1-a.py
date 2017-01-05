@@ -1,9 +1,13 @@
 from z3 import *
 import utils
 
+# TRUCK_CAPACITY = 240
+
+# STEPS = 23
+
 TRUCK_CAPACITY = 260
 
-STEPS = 30
+STEPS = 15
 
 NUM_LOCATIONS = 5
 LOCATIONS = ["S", "A", "B", "C", "D"]
@@ -126,7 +130,7 @@ for i in range(STEPS-1):
 				And(
 					# Stuff was delivered at A
 					truckStatus[i][TYPEOF['DELIVERED']] <= CAPACITY['A'] - truckStatus[i][TYPEOF['A']],
-					# THe truck can go to S, C or B from here
+					# The truck can go to S, C or B from here
 					Or(
 						# Truck goes to S
 						And(
@@ -173,7 +177,7 @@ for i in range(STEPS-1):
 				And(
 					# Stuff was delivered at C
 					truckStatus[i][TYPEOF['DELIVERED']] <= CAPACITY['C'] - truckStatus[i][TYPEOF['C']],
-					# THe truck can go to S, A or B from here
+					# THe truck can go to S, A ,B or D from here
 					Or(
 						# Truck goes to S
 						And(
@@ -200,6 +204,15 @@ for i in range(STEPS-1):
 							truckStatus[i+1][TYPEOF['B']] == truckStatus[i][TYPEOF['B']] - BtoC,
 							truckStatus[i+1][TYPEOF['C']] == truckStatus[i][TYPEOF['C']] - BtoC + truckStatus[i][TYPEOF['DELIVERED']],
 							truckStatus[i+1][TYPEOF['D']] == truckStatus[i][TYPEOF['D']] - BtoC,
+							truckStatus[i+1][TYPEOF['INTRUCK']] == truckStatus[i][TYPEOF['INTRUCK']] - truckStatus[i+1][TYPEOF['DELIVERED']]
+							),
+						# Truck goes to D
+						And(
+							truckStatus[i+1][TYPEOF['POS']] == LOC['D'],
+							truckStatus[i+1][TYPEOF['A']] == truckStatus[i][TYPEOF['A']] - CtoD,
+							truckStatus[i+1][TYPEOF['B']] == truckStatus[i][TYPEOF['B']] - CtoD,
+							truckStatus[i+1][TYPEOF['C']] == truckStatus[i][TYPEOF['C']] - CtoD + truckStatus[i][TYPEOF['DELIVERED']],
+							truckStatus[i+1][TYPEOF['D']] == truckStatus[i][TYPEOF['D']] - CtoD,
 							truckStatus[i+1][TYPEOF['INTRUCK']] == truckStatus[i][TYPEOF['INTRUCK']] - truckStatus[i+1][TYPEOF['DELIVERED']]
 							)
 
