@@ -7,7 +7,7 @@ import utils
 
 TRUCK_CAPACITY = 260
 
-STEPS = 25
+STEPS = 15
 
 NUM_LOCATIONS = 5
 LOCATIONS = ["S", "A", "B", "C", "D"]
@@ -318,6 +318,22 @@ for i in range(STEPS):
 				truckStatus[i][TYPEOF['D']] > 0
 				)
 		)
+# Steady state loop
+s.add(
+	Or(
+		[
+			And(
+				truckStatus[i][TYPEOF['POS']] == truckStatus[STEPS-1][TYPEOF['POS']],
+				truckStatus[i][TYPEOF['A']] == truckStatus[STEPS-1][TYPEOF['A']],
+				truckStatus[i][TYPEOF['B']] == truckStatus[STEPS-1][TYPEOF['B']],
+				truckStatus[i][TYPEOF['C']] == truckStatus[STEPS-1][TYPEOF['C']],
+				truckStatus[i][TYPEOF['D']] == truckStatus[STEPS-1][TYPEOF['D']],
+				truckStatus[i][TYPEOF['DELIVERED']] == truckStatus[STEPS-1][TYPEOF['DELIVERED']],
+				truckStatus[i][TYPEOF['INTRUCK']] == truckStatus[STEPS-1][TYPEOF['INTRUCK']]
+				) for i in range(1,STEPS-1)
+		]
+		)
+	)
 
 if s.check() == sat:
 
