@@ -1,31 +1,69 @@
 from z3 import *
 import utils
 
-ACTORS = 6
+ACTORS = 12
 
-CHARACTERS = {}
-CHARACTERS["John"] = "Male"
-CHARACTERS["Alex"] = "Male"
-CHARACTERS["Father"] = "Male"
-CHARACTERS["Young Man"] = "Young male"
-CHARACTERS["Stacy"] = "Female"
-CHARACTERS["Mother"] = "Female"
-CHARACTERS["Grandma"] = "Female"
-CHARACTERS["Woman #1"] = "Female"
-CHARACTERS["Lawyer"] = "Female"
+CHARACTERS = {
+		"Actor": "Male",
+		"Alex": "Male",	
+		"Alfreda": "Female",	
+		"Fat Man": "Male",	
+		"Father": "Male",	
+		"Grandma": "Female",	
+		"Husband": "Male",	
+		"Jack Holdman": "Male",	
+		"John": "Male",	
+		"M. Sweetwater": "Female",	
+		"Man #1": "Male",	
+		"Man #2": "Male",
+		"Mother": "Female",	
+		"New Actor": "Male",	
+		"New Actress": "Female",	
+		"Office Worker": "Female",	
+		"Older Man": "Male",	
+		"Stacy": "Female",	
+		"Thom": "Young Male",	
+		"Wife": "Female",	
+		"Woman #1": "Female",	
+		"Woman #2": "Female",	
+		"Woman w/Glasses": "Female",	
+		"Young Man": "Young Male"
+	}
 
-LEADING_CHARACTERS = {"Stacy"}
 
-MAX_CHARACTERS = 2
+LEADING_CHARACTERS = {"Stacy", "Alex", "John"}
+
+MAX_CHARACTERS = 3
 
 SCENES = {}
 
 SCENES = [
-		{"name": "Act I Opening", "chars": ["Father", "Mother", "Grandma"]},
-		{"name": "Theatre Lobby", "chars": ["Stacy", "John"]},
-		{"name": "An Audition", "chars": ["Woman #1", "Alex", "John", "Lawyer", "Stacy"]},
-		{"name": "Stacy's Apartment", "chars": ["Stacy", "Young Man"]}
-	]
+	{"name": "Act I Opening", "chars": ["Father","Mother","Grandma","Woman w/Glasses","Young Man"]},
+	{"name": "Theatre Lobby", "chars": ["Stacy","John"]},
+	{"name": "An Audition", "chars": ["Woman #1","Woman #2","John"]},
+	{"name": "John's Apartment", "chars": ["John"]},
+	{"name": "Another Audition #1", "chars": ["Fat Man","John"]},
+	{"name": "Another Audition #2", "chars": ["John","Older Man"]},
+	{"name": "A Theatre Lobby", "chars": ["Alex","John"]},
+	{"name": "An Upscale Restaurant", "chars": ["John","Husband","Wife","Man #1","Man #2"]},
+	{"name": "Studio Office", "chars": ["Office Worker","John","Actor"]},
+	{"name": "Scene Study", "chars": ["Jack Holdman","New Actress","John"]},
+	{"name": "Acting Studio", "chars": ["Alex","John"]},
+	{"name": "Another Scene Study", "chars": ["M. Sweetwater","New Actor","John"]},
+	{"name": "City Street", "chars": ["Stacy","John"]},
+	{"name": "Theatre Lobby", "chars": ["Alex","John","Stacy"]},
+	{"name": "Heartbeat Theatre", "chars": ["John","Alfreda","Thom"]}
+]
+
+ch = []
+
+for scene in SCENES:
+	scene
+
+	ch = list(set(ch + scene["chars"]))
+
+print(ch)
+
 
 TYPES = []
 
@@ -35,12 +73,12 @@ for char in CHARACTERS:
 	if t not in TYPES:
 		TYPES.append(t)
 
-CharType = Datatype('CharType')
+CharType = Datatype("CharType")
 
 for t in TYPES:
 	CharType.declare(t)
 
-CharType, ts = EnumSort('CharType', TYPES)
+CharType, ts = EnumSort("CharType", TYPES)
 
 types = {}
 
@@ -49,9 +87,9 @@ for char in CHARACTERS:
 		if(str(CHARACTERS[char]) == str(t)):
 			types[char] = t
 
-actorOf = {char: Int('actorOf[%s]' % (char)) for char in CHARACTERS}
+actorOf = {char: Int("actorOf[%s]" % (char)) for char in CHARACTERS}
 
-typeOf = {actor: Const('typeOf[%d]' % (actor), CharType) for actor in range(ACTORS)}
+typeOf = {actor: Const("typeOf[%d]" % (actor), CharType) for actor in range(ACTORS)}
 
 # print(actorOf)
 s = Solver()
@@ -68,7 +106,7 @@ for i in range(ACTORS):
 for idx, lc in enumerate(LEADING_CHARACTERS):
 	s.add(actorOf[lc] == idx)
 
-	# Actors that play a leading character can't play other characters
+	# Actors that play a leading character can"t play other characters
 	for char in CHARACTERS:
 		if(char != lc):
 			s.add(actorOf[lc] != actorOf[char])
