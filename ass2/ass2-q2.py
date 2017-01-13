@@ -1,58 +1,77 @@
 from functools import *
 
-# (0_a_1 == 1 and ((1_a_0 == 1 and 0_accepting == 1) or (1_a_2 == 1 and 2_accepting == 1))) or 
-# (0_a_2 == 1 and ((2_a_0 == 1 and 0_accepting == 1) or (2_a_1 == 1 and 1_accepting == 1)))
-
-
 from z3 import *
 import utils
 
-STATES = 3
-ALPHABET = ['a', 'b']
+ALPHABET = ["a", "b"]
 
-IDX = {}
-for idx, char in enumerate(ALPHABET):
-	IDX[char] = idx
+s = ""
 
-
+STATES = 7
 LANGUAGE = ['aa', 'bb', 'aba', 'baa', 'abab', 'babb', 'bbba']
+
 MAX_DEPTH = reduce(lambda acc, x: len(x) if len(x) > acc else acc, LANGUAGE, 0)
 
-print("Depth: ", MAX_DEPTH)
-
-nfa = [[[Bool('nfa[%s][%d][%d]' % (c, i, j)) for i in range(STATES)] for j in range(STATES)] for c in ALPHABET] 
+nfa = {c: [[Bool('nfa[%s][%d][%d]' % (c, i, j)) for j in range(STATES)] for i in range(STATES)] for c in ALPHABET}
 acc = [Bool('acc[%d]' % (i)) for i in range(STATES)]
 
 s = Solver()
 
+def constraints(idx, preds, word):
+    if idx == len(word):
+        # print(preds)
+        p = []
+        x = 0
+        for i, pred in enumerate(preds):
+            p += [nfa[word[i]][x][pred]]
+            x = pred
 
-def rec(state, s):
-    print(s)
+        p += [acc[x]]
+
+        # print(p)
+        if word in LANGUAGE:
+            return And(p)
+        else:
+            return Not(And(p))
+
+    p = []
+
+    for i in range(STATES):
+        p += [constraints(idx + 1, preds + [i], word)]
+
+    # print(word)
+    # print(p)
+    if word in LANGUAGE:
+        return Or(p)
+    else:
+        return And(p)
+
+def words(idx, word):
+
+    p = constraints(0, [], word)
+
+    if len(word) > 0:
+        if word in LANGUAGE:
+            print("ACC")
+        else:
+            print("NCC")
+
+    # print(p)
+    print(word)
+    s.add(p)
 
     if idx == MAX_DEPTH:
-        if(s in LANGUAGE):
+        # print(word)
+        return
 
+    words(idx + 1, word + 'a')
+    words(idx + 1, word + 'b')
 
-        return And(preds)
+words(0, "")
 
-    rec(idx + 1, s + 'a')
-    rec(idx + 1, s + 'b')
-
-    [nfa[s[-1]][state][next_state] for next_state in range(STATES)]
-
-
-
-for word in LANGUAGE:
-	states = [0]
-	
-	for c in word:
-		for state in states:
-			s.add(Or([(nfa[IDX[c][state][i]] == True) for i in range(STATES)]))
-
-
-print("asserted constraints...")
-for c in s.assertions():
-    print(c)
+# print("asserted constraints...")
+# for c in s.assertions():
+    # print(c)
 print()
 print()
 
